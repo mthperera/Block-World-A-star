@@ -16,21 +16,28 @@ class BlockWorld(State):
         self.goal = goal
         self.heuristic = heuristic
 
-    @staticmethod
-    def format_state(state):
-        altura_max = max(len(stack) for stack in state)
-        linhas = []
+    # @staticmethod
+    # def format_state(state):
 
-        for h in range(altura_max - 1, -1, -1):
-            linha = []
-            for stack in state:
-                if len(stack) > h:
-                    linha.append(str(stack[h]))
-                else:
-                    linha.append(" ")
-            linhas.append(" ".join(linha))
+    #     max_height = max(len(stack) for stack in state)
 
-        return "\n".join(linhas)
+    #     width = max(len(str(b)) for stack in state for b in stack)
+
+    #     lines = []
+
+    #     for h in range(max_height - 1, -1, -1):
+    #         row = []
+    #         for stack in state:
+    #             if len(stack) > h:
+    #                 value = str(stack[h])
+    #             else:
+    #                 value = ""
+    #             row.append(value.center(width))
+    #         lines.append(" | ".join(row))
+
+    #     base = "-+-".join("-" * width for _ in state)
+
+    #     return "\n".join(lines + [base])
     
     def successors(self):
         successors = []
@@ -46,7 +53,7 @@ class BlockWorld(State):
                     new_state[i].pop()
                     new_state[j].append(block)
                     successor = BlockWorld(
-                        name = self.format_state(new_state),
+                        name = str(new_state),
                         heuristic = self.heuristic,
                         state = new_state,
                         goal = self.goal
@@ -76,3 +83,19 @@ class BlockWorld(State):
             Objetivo:
             {self.format_state(self.goal)}
         """
+    
+    # @staticmethod
+    # def my_show_path(result):
+    #     path = []
+    #     node = result
+
+    #     while node is not None:
+    #         path.append(node)
+    #         node = getattr(node, "parent", None) or getattr(node, "father", None)
+
+    #     path.reverse()
+
+    #     for i, node in enumerate(path):
+    #         print(f"Step {i}:\n")
+    #         print(BlockWorld.format_state(node.state.state))
+    #         print()
