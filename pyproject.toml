@@ -1,0 +1,15 @@
+[project]
+name = "block-world-aps02"
+version = "0.1.0"
+description = "Projeto APS 02 - Problema Block World com busca A*"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "aigyminsper"
+]
+
+authors = [
+    { name = "Emily de Britto Gomes" },
+    { name = "Gabriel Chaves Aguiar" },
+    { name = "Matheus Henrique Pereira Borba" }
+]
