@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import List
+from typing import List, Any
 
 import numpy as np
 from scipy.spatial import KDTree
@@ -8,7 +8,7 @@ from scipy.spatial.distance import cdist
 
 class Heuristic(ABC):
     
-    def __init__(self, state: List[List[int]], goal: List[List[int]]):
+    def __init__(self, state: List[List[Any]], goal: List[List[Any]]):
         self.state = state
         self.goal = goal
 
@@ -19,7 +19,7 @@ class Heuristic(ABC):
 
 class HeuristicRMSE(Heuristic):
 
-    def _to_matrix(self, state: List[List[int]]):
+    def _to_matrix(self, state: List[List[Any]]):
         n = sum(len(stack) for stack in state)
         matriz = [[0] * n for _ in range(n)]
 
@@ -45,7 +45,7 @@ class HeuristicRMSE(Heuristic):
 
 class HeuristicBlocking(Heuristic):
 
-    def _get_positions(self, state: List[List[int]]):
+    def _get_positions(self, state: List[List[Any]]):
         positions = {}
         for i, stack in enumerate(state):
             for j, block in enumerate(stack):
@@ -67,7 +67,7 @@ class HeuristicBlocking(Heuristic):
 
 class HeuristicNilsson(Heuristic):
 
-    def _get_positions(self, state: List[List[int]]):
+    def _get_positions(self, state: List[List[Any]]):
         positions = {}
         for i, stack in enumerate(state):
             for j, block in enumerate(stack):
@@ -90,7 +90,7 @@ class HeuristicNilsson(Heuristic):
 
 class HeuristicChamfer(Heuristic):
 
-    def _get_points(self, state: List[List[int]]) -> np.ndarray:
+    def _get_points(self, state: List[List[Any]]) -> np.ndarray:
 
         points = []
         for i, stack in enumerate(state):
@@ -117,7 +117,7 @@ class HeuristicChamfer(Heuristic):
 
 class HeuristicHausdorff(Heuristic):
 
-    def _get_points(self, state: List[List[int]]) -> np.ndarray:
+    def _get_points(self, state: List[List[Any]]) -> np.ndarray:
         points = []
         for i, stack in enumerate(state):
             for j, _ in enumerate(stack):

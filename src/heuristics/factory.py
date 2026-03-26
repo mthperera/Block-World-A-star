@@ -6,7 +6,7 @@ from src.heuristics.bases import *
 class HeuristicFactory:
 
     @staticmethod
-    def create(heuristic_name: str, state: List[List[int]], goal: List[List[int]]):
+    def create(heuristic_name: str, state: List[List[Any]], goal: List[List[Any]]):
         
         if heuristic_name == "rmse":
             return HeuristicRMSE(state, goal)

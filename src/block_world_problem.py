@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Any
 
 from aigyminsper.search.graph import State
 
@@ -10,8 +10,8 @@ class BlockWorld(State):
     def __init__(self,
         name: str,
         heuristic: str,
-        state: List[List[int]],
-        goal: List[List[int]],
+        state: List[List[Any]],
+        goal: List[List[Any]],
     ) -> None:
         
         super().__init__(name)

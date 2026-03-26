@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Any
 
 from aigyminsper.search.search_algorithms import AEstrela
 
@@ -6,9 +6,10 @@ from src.block_world_problem import BlockWorld
 
 
 def main(
-        initial_state: List[List[int]], 
-        goal_state: List[List[int]], 
-        heuristic: str
+        initial_state: List[List[Any]], 
+        goal_state: List[List[Any]], 
+        heuristic: str,
+        tracing: bool = True
     ):
 
     state = BlockWorld(
@@ -20,14 +21,17 @@ def main(
 
     algorithm = AEstrela()
 
-    result = algorithm.search(state)
+    result = algorithm.search(state, pruning="father-son")
 
-    if result:
-        print("Solution path:\n")
-        print(result.show_path())
-        print(f"\nCost: {result.g}")
-    else:
-        print("No solution found")
+    if tracing:
+        if result:
+            print("Solution path:\n")
+            print(result.show_path())
+            print(f"\nCost: {result.g}")
+        else:
+            print("No solution found")
+    
+    return result
 
 
 if __name__ == "__main__":
