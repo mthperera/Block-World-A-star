@@ -70,7 +70,11 @@ class BlockWorld(State):
     
     def h(self):
         if self.heuristic == "rmse":
-            return self._heuristica_rmse()
+            return self.heuristica_rmse()
+        
+        elif self.heuristic == "distancia_logica":
+            return self.heuristica_distancia_logica()
+        
         return 0
     
     def env(self):
@@ -85,6 +89,8 @@ class BlockWorld(State):
             {self.format_state(self.goal)}
         """
     
+    # ========================= HEURÍSTICA 1 =========================
+
     def to_matrix(self, state): # função auxiliar p heurística rmse
         n = sum(len(stack) for stack in self.state)
 
@@ -95,7 +101,7 @@ class BlockWorld(State):
                     matriz[i][j] = 1
         return matriz
     
-    def _heuristica_rmse(self):
+    def heuristica_rmse(self): # admissivel e não produtiva
         # '''
         # Heurística 1: RMSE -> VERSAO 1
 
@@ -149,7 +155,65 @@ class BlockWorld(State):
                 erros.append((mat_atual[i][j] - mat_goal[i][j]) ** 2)
 
         return (sum(erros) / n**2) ** 0.5 
-                
+    
+    
+    # ========================= HEURÍSTICA 2 =========================
+    
+    def get_posicoes(self, state): # função auxiliar p heurística distância lógica
+            positions = {}
+            for i, stack in enumerate(state):
+                for j, block in enumerate(stack):
+                    positions[block] = (i, j)
+            return positions
+    
+    def heuristica_distancia_logica(self): # admissivel
+        '''
+        Heurística 2: Distância lógica com penalidade por obstrução
+
+        Pra cada bloco no lugar errado, soma 1
+        Se esse bloco tem outros blocos em cima, soma 1 para cada obstáculo,
+        pq eles precisarão ser movidos antes
+        '''
+
+        pos_atual = self.get_posicoes(self.state)
+        pos_goal  = self.get_posicoes(self.goal)
+
+        custo = 0
+        for i, stack in enumerate(self.state):
+            for j, block in enumerate(stack):
+                if pos_atual[block] != pos_goal.get(block):
+                    custo += 1  # bloco no lugar errado
+                    custo += len(stack) - j - 1  # blocos em cima dele
+        return custo    
+    
+    
+    # ========================= HEURÍSTICA 3 =========================
+    
+    def heuristica_nilsson(self): # n admissível
+        '''
+        Heurística 3: Penalidade Multiplicativa de Nilsson 
+
+        Varre cada pilha verificando se cada bloco está sobre o bloco correto.
+        
+        -Bloco sobre o lugar errado: +3 (teremos que mover ele e depois arrumar o bloco abaixo)
+        -Bloco que obstrui um bloco mal posicionado: +2 pra cada bloco acima
+        '''
+        
+        pos_atual = self.get_posicoes(self.state)
+        pos_goal  = self.get_posicoes(self.goal)
+        custo = 0
+        
+        for i, stack in enumerate(self.state):
+            for j, block in enumerate(stack):
+                # se o bloco n esta na coordenada do objetivo
+                if pos_atual[block] != pos_goal.get(block):
+                    custo += 3 
+                    # se esse bloco ta errado terá q ser movido 
+                    # portanto TODOS os blocos acima dele estão obstruindo o caminho
+                    blocos_acima = len(stack) - j - 1
+                    custo += 2 * blocos_acima
+
+        return custo
     
     # @staticmethod
     # def my_show_path(result):
