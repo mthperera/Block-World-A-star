@@ -85,42 +85,71 @@ class BlockWorld(State):
             {self.format_state(self.goal)}
         """
     
+    def to_matrix(self, state):
+        n = sum(len(stack) for stack in self.state)
+
+        matriz = [[0] * n for _ in range(n)]
+        for j, stack in enumerate(state):
+            for i, _ in enumerate(stack):
+                if j < n:
+                    matriz[i][j] = 1
+        return matriz
     
     def _heuristica_rmse(self):
-        '''
-        Heurística 1: RMSE
+        # '''
+        # Heurística 1: RMSE -> VERSAO 1
 
-        Cada bloco tem uma posição (coluna, altura) no estado atual e no objetivo.
-        Calcula o erro quadrático entre as posições de cada bloco e tira a média,
-        aplicando raiz quadrada no final:
-        RMSE = sqrt( (1/n) * sum( (delta_coluna)^2 + (delta_altura)^2 ) )
-        Blocos ausentes em um dos estados recebem posição padrão (0, 0).
+        # Cada bloco tem uma posição (coluna, altura) no estado atual e no objetivo.
+        # Calcula o erro quadrático entre as posições de cada bloco e tira a média,
+        # aplicando raiz quadrada no final:
+        # RMSE = sqrt( (1/n) * sum( (delta_coluna)^2 + (delta_altura)^2 ) )
+        # Blocos ausentes em um dos estados recebem posição padrão (0, 0).
+        # '''
+        
+        # def get_posicoes(state):
+        #     # dicionário pra armazenar as posições dos blocos
+        #     positions = {}
+        #     for i, stack in enumerate(state):
+        #         for j, block in enumerate(stack):
+        #             positions[block] = (i, j)
+        #     return positions
+        
+        # pos_atual = get_posicoes(self.state)
+        # pos_goal = get_posicoes(self.goal)
+        
+        # total_blocos = set(pos_atual.keys()) | set(pos_goal.keys()) # união dos blocos do estado atual + objetivo
+        # n = len(total_blocos)
+        
+        # if n == 0:
+        #     return 0
+        # erros = []
+        # for block in total_blocos:
+        #     pos_i, pos_j = pos_atual.get(block, (0,0))
+        #     meta_i, meta_j = pos_goal.get(block, (0,0))
+        #     erros.append((pos_i - meta_i)**2 + (pos_j - meta_j)**2)
+        
+        # return (sum(erros)/n)**0.5
+        
+        '''
+        Heurística 1: RMSE -> VERSAO 2
+        
+        Representa o estado atual e o objetivo como matrizes nXn, onde n = número de blocos e cada coluna é uma pilha. Daí
+        RMSE = sqrt((1/n^2) * sum((atual[i][j] - goal[i][j])^2))
         '''
         
-        def get_posicoes(state):
-            # dicionário pra armazenar as posições dos blocos
-            positions = {}
-            for i, stack in enumerate(state):
-                for j, block in enumerate(stack):
-                    positions[block] = (i, j)
-            return positions
-        
-        pos_atual = get_posicoes(self.state)
-        pos_goal = get_posicoes(self.goal)
-        
-        total_blocos = set(pos_atual.keys()) | set(pos_goal.keys()) # união dos blocos do estado atual + objetivo
-        n = len(total_blocos)
-        
-        if n == 0:
-            return 0
+        n = sum(len(stack) for stack in self.state)
+
+        mat_atual = self.to_matrix(self.state)
+        mat_goal  = self.to_matrix(self.goal)
+
         erros = []
-        for block in total_blocos:
-            pos_i, pos_j = pos_atual.get(block, (0,0))
-            meta_i, meta_j = pos_goal.get(block, (0,0))
-            erros.append((pos_i - meta_i)**2 + (pos_j - meta_j)**2)
-        
-        return (sum(erros)/n)**0.5
-        
+        erros = []
+        for i in range(n):
+            for j in range(n):
+                erros.append((mat_atual[i][j] - mat_goal[i][j]) ** 2)
+
+        return (sum(erros) / n**2) ** 0.5 
+                
     
     # @staticmethod
     # def my_show_path(result):
