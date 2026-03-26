@@ -85,7 +85,7 @@ class BlockWorld(State):
             {self.format_state(self.goal)}
         """
     
-    def to_matrix(self, state):
+    def to_matrix(self, state): # função auxiliar p heurística rmse
         n = sum(len(stack) for stack in self.state)
 
         matriz = [[0] * n for _ in range(n)]
@@ -130,6 +130,7 @@ class BlockWorld(State):
         
         # return (sum(erros)/n)**0.5
         
+        
         '''
         Heurística 1: RMSE -> VERSAO 2
         
@@ -142,7 +143,6 @@ class BlockWorld(State):
         mat_atual = self.to_matrix(self.state)
         mat_goal  = self.to_matrix(self.goal)
 
-        erros = []
         erros = []
         for i in range(n):
             for j in range(n):
