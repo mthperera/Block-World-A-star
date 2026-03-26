@@ -1,11 +1,16 @@
-from src.block_world_problem import BlockWorld
+from typing import List
 
 from aigyminsper.search.search_algorithms import AEstrela
 
+from src.block_world_problem import BlockWorld
 
-def main(initial_state, goal_state, heuristic):
 
-    # create initial node
+def main(
+        initial_state: List[List[int]], 
+        goal_state: List[List[int]], 
+        heuristic: str
+    ):
+
     state = BlockWorld(
         name=str(initial_state),
         state=initial_state,
@@ -13,13 +18,10 @@ def main(initial_state, goal_state, heuristic):
         heuristic=heuristic
     )
 
-    # A* algorithm
     algorithm = AEstrela()
 
-    # run search
     result = algorithm.search(state)
 
-    # output
     if result:
         print("Solution path:\n")
         print(result.show_path())
@@ -29,4 +31,8 @@ def main(initial_state, goal_state, heuristic):
 
 
 if __name__ == "__main__":
-    main(initial_state = [[1, 2, 3], [4]], goal_state = [[1], [4, 3, 2]], heuristic="rmse")
+    main(
+        initial_state = [[1, 2, 3], [4], [], []], 
+        goal_state = [[1], [], [], [4, 2, 3]], 
+        heuristic="rmse"
+    )

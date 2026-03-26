@@ -6,6 +6,7 @@ from src.heuristics.factory import HeuristicFactory
 
 
 class BlockWorld(State):
+    
     def __init__(self,
         name: str,
         heuristic: str,
@@ -86,7 +87,7 @@ class BlockWorld(State):
     #     base = "-+-".join("-" * width for _ in state)
 
     #     return "\n".join(lines + [base])
-    
+
     ## DAQUI PRA BAIXO EU N MEXI MAS JÁ TAVA COMENTADO
     # @staticmethod
     # def my_show_path(result):

@@ -10,9 +10,13 @@ class HeuristicFactory:
         
         if heuristic_name == "rmse":
             return HeuristicRMSE(state, goal)
-        elif heuristic_name == "distance":
-            return HeuristicDistance(state, goal)
+        elif heuristic_name == "blocking":
+            return HeuristicBlocking(state, goal)
         elif heuristic_name == "nilsson":
             return HeuristicNilsson(state, goal)
+        elif heuristic_name == "chamfer":
+            return HeuristicChamfer(state, goal)
+        elif heuristic_name == "hausdorff":
+            return HeuristicHausdorff(state, goal)
         else:
             raise ValueError(f"Heurística '{heuristic_name}' não reconhecida")

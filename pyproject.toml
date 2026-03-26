@@ -5,7 +5,9 @@ description = "Projeto APS 02 - Problema Block World com busca A*"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
-    "aigyminsper"
+    "aigyminsper",
+    "numpy",
+    "scipy"
 ]
 
 authors = [
