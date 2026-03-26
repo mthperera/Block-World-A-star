@@ -1,16 +1,16 @@
-from block_world_problem import BlockWorld
+from src.block_world_problem import BlockWorld
 
 from aigyminsper.search.search_algorithms import AEstrela
 
 
-def main(initial_state, goal_state):
+def main(initial_state, goal_state, heuristic):
 
     # create initial node
     state = BlockWorld(
         name=str(initial_state),
         state=initial_state,
         goal=goal_state,
-        heuristic="" # Aqui tem que alterar
+        heuristic=heuristic
     )
 
     # A* algorithm
@@ -29,4 +29,4 @@ def main(initial_state, goal_state):
 
 
 if __name__ == "__main__":
-    main(initial_state = [[1, 2, 3], [4]], goal_state = [[1], [4, 3, 2]])
+    main(initial_state = [[1, 2, 3], [4]], goal_state = [[1], [4, 3, 2]], heuristic="rmse")
