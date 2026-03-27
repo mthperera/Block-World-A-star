@@ -21,7 +21,7 @@ def main(
 
     algorithm = AEstrela()
 
-    result = algorithm.search(state, pruning="father-son")
+    result = algorithm.search(state, pruning="general")
 
     if tracing:
         if result:
@@ -36,7 +36,7 @@ def main(
 
 if __name__ == "__main__":
     main(
-        initial_state = [[1, 2, 3], [4], [], []], 
-        goal_state = [[1], [], [], [4, 2, 3]], 
+        initial_state = [[1, 2, 3, 5], [4], [], [], []], 
+        goal_state = [[1], [], [], [5, 4, 2, 3], []], 
         heuristic="rmse"
     )

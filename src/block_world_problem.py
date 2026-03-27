@@ -21,6 +21,7 @@ class BlockWorld(State):
     
     def successors(self):
         successors = []
+        print(self.state)
 
         for i, stack in enumerate(self.state):
             if len(stack) > 0:
@@ -53,7 +54,7 @@ class BlockWorld(State):
         return heuristic.calculate()
     
     def env(self):
-        return self.state
+        return tuple(tuple(row) for row in self.state)
 
     def description(self):
         return f"""
