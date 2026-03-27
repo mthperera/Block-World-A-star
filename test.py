@@ -79,4 +79,3 @@ class Test():
 if __name__ == "__main__":
     results = Test([1, 2, 3], "rmse").run()
     print(results)
-
