@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Literal
 
 from src.heuristics.bases import *
 
@@ -6,7 +6,11 @@ from src.heuristics.bases import *
 class HeuristicFactory:
 
     @staticmethod
-    def create(heuristic_name: str, state: List[List[Any]], goal: List[List[Any]]):
+    def create(
+            heuristic_name: Literal["rmse", "blocking", "nilsson", "chamfer", "hausdorff"], 
+            state: List[List[Any]], 
+            goal: List[List[Any]]
+        ):
         
         if heuristic_name == "rmse":
             return HeuristicRMSE(state, goal)

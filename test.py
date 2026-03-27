@@ -1,7 +1,7 @@
 from itertools import permutations
 from math import comb, factorial
 import random
-from typing import List, Any, Optional
+from typing import List, Any, Optional, Literal
 
 from main import main
 
@@ -10,7 +10,7 @@ class Test():
 
     def __init__(self, 
             objects: List[Any], 
-            heuristic: str,
+            heuristic: Literal["rmse", "blocking", "nilsson", "chamfer", "hausdorff"],
             max_tests: Optional[int] = None
         ):
         self.objects = objects

@@ -1,4 +1,4 @@
-from typing import List, Any
+from typing import List, Any, Literal
 
 from aigyminsper.search.search_algorithms import AEstrela
 
@@ -8,7 +8,7 @@ from src.block_world_problem import BlockWorld
 def main(
         initial_state: List[List[Any]], 
         goal_state: List[List[Any]], 
-        heuristic: str,
+        heuristic: Literal["rmse", "blocking", "nilsson", "chamfer", "hausdorff"],
         tracing: bool = True
     ):
 

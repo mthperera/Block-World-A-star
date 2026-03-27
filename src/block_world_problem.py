@@ -1,4 +1,4 @@
-from typing import List, Any, Optional
+from typing import List, Any, Optional, Literal
 
 from aigyminsper.search.graph import State
 
@@ -9,7 +9,7 @@ class BlockWorld(State):
     
     def __init__(self,
         name: str,
-        heuristic: str,
+        heuristic: Literal["rmse", "blocking", "nilsson", "chamfer", "hausdorff"],
         state: List[List[Any]],
         goal: List[List[Any]],
         goal_set: Optional[set] = None
