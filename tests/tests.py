@@ -1,7 +1,11 @@
 from itertools import permutations
 from math import comb, factorial
+from pathlib import Path
 import random
+import sys
 from typing import List, Any, Optional, Literal
+
+sys.path.append(str(Path(__file__).resolve().parent.parent))
 
 from main import main
 
